@@ -1,7 +1,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-@import "palette";
+@import "styles/palette";
+@import "styles/fonts";
 
 // common angular styles
 @include mat.core();
@@ -18,7 +19,7 @@ $exercise-theme: mat.define-light-theme((
     accent: $exercise-accent,
     warn: $exercise-warn,
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.define-typography-config($font-family),
   density: 0
 ));
 

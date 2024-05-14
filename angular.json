@@ -30,7 +30,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/palette.scss",
               "src/styles.scss"
             ],
             "scripts": []

@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {NgForOf, NgIf} from "@angular/common";
-import {routes} from "./app.routes";
-import {MatButton, MatButtonModule} from "@angular/material/button";
-import {MatToolbar} from "@angular/material/toolbar";
-import {MatNavList} from "@angular/material/list";
+import {NavbarComponent} from "./components/basic/navbar/navbar.component";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgForOf, MatButtonModule, MatButton, NgIf, MatToolbar, RouterLink, RouterLinkActive, MatNavList],
+  imports: [NavbarComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'exercise';
-  protected readonly routes = routes;
-}
+export class AppComponent {}

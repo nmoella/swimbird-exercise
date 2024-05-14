@@ -1,0 +1,14 @@
+<mat-toolbar>
+  <mat-nav-list id="routes">
+    <ng-container *ngFor="let route of routes">
+      <button
+        *ngIf="route.visible"
+        [routerLink]="route.path"
+        routerLinkActive="active"
+        mat-button>
+
+        <span>{{ route.title }}</span>
+      </button>
+    </ng-container>
+  </mat-nav-list>
+</mat-toolbar>
