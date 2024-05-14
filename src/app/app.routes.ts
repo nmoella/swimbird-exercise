@@ -1,26 +1,35 @@
-import { Routes } from '@angular/router';
+import {Route, Routes} from '@angular/router';
 import {Page1Component} from "./components/page1/page1.component";
 import {Page2Component} from "./components/page2/page2.component";
 
-export const routes: Routes = [
+export declare type NavRoutes = NavRoute[];
+export interface NavRoute extends Route {
+  visible: boolean;
+}
+
+export const routes: NavRoutes = [
   {
     path: 'page1',
-    title: 'Page 1',
-    component: Page1Component
+    title: 'Page1',
+    component: Page1Component,
+    visible: true
   },
   {
     path: 'page2',
-    title: 'Page 2',
+    title: 'Page2',
     component: Page2Component,
+    visible: true
   },
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'page1',
+    visible: false
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'page1'
+    redirectTo: 'page1',
+    visible: false
   }
 ];
