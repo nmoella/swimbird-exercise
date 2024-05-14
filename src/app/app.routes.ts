@@ -1,6 +1,6 @@
 import {Route, Routes} from '@angular/router';
-import {Page1Component} from "./components/page1/page1.component";
-import {Page2Component} from "./components/page2/page2.component";
+import {Page1Component} from "./components/routes/page1/page1.component";
+import {Page2Component} from "./components/routes/page2/page2.component";
 
 export declare type NavRoutes = NavRoute[];
 export interface NavRoute extends Route {
