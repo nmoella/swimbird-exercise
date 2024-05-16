@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {AccountService} from "../../services/account.service";
 import {NgIf} from "@angular/common";
@@ -11,9 +11,12 @@ import {
   MatHeaderCell,
   MatHeaderCellDef, MatHeaderRow,
   MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable
+  MatTable, MatTableDataSource
 } from "@angular/material/table";
 import {CdkTableDataSourceInput} from "@angular/cdk/table";
+import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {AccountTableComponent} from "../../components/account-table/account-table.component";
 
 @Component({
   selector: 'app-page2',
@@ -31,27 +34,34 @@ import {CdkTableDataSourceInput} from "@angular/cdk/table";
     MatHeaderRowDef,
     MatRowDef,
     MatHeaderRow,
-    MatRow
+    MatRow,
+    MatSortHeader,
+    MatSort,
+    AccountTableComponent
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
   protected loading: boolean = false;
-  dataSource: CdkTableDataSourceInput<Account> = [];
-  displayedColumns: string[] = ['id', 'accountId', 'bank', 'balance', 'currency'];
+  protected dataSource: MatTableDataSource<Account> | undefined;
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
   ) {}
 
   public async loadAccounts(): Promise<void> {
     this.loading = true;
-    this.dataSource = await this.accountService.getAccounts();
+
+    if (this.isLoaded()) {
+      await this.accountService.reloadAccounts();
+    }
+    
+    this.dataSource = new MatTableDataSource(await this.accountService.getAccounts());
     this.loading = false;
   }
 
   public isLoaded(): boolean {
-    return this.accountService.isLoaded();
+    return this.accountService.isLoaded() && this.dataSource != undefined;
   }
 }

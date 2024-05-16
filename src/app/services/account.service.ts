@@ -16,11 +16,15 @@ export class AccountService {
 
   public async getAccounts(): Promise<Account[]> {
     if (this.accounts == undefined) {
-      this.accounts = await firstValueFrom(this.http.get<Account[]>(this.accountBackendUrl));
-      console.log(`loaded ${this.accounts.length} accounts`);
+      await this.reloadAccounts();
     }
 
-    return this.accounts;
+    return this.accounts!;
+  }
+
+  public async reloadAccounts(): Promise<void> {
+    this.accounts = await firstValueFrom(this.http.get<Account[]>(this.accountBackendUrl));
+    console.log(`loaded ${this.accounts.length} accounts`);
   }
 
   public isLoaded(): boolean {
