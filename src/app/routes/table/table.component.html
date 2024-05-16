@@ -1,1 +1,13 @@
-<button mat-raised-button color="primary">Load data</button>
+<button
+  (click)="loadAccounts()"
+  mat-raised-button
+  color="primary">Load data
+</button>
+
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<table *ngIf="isLoaded(); else notLoaded"></table>
+
+<ng-template #notLoaded>
+  <p>Data is not loaded</p>
+</ng-template>
