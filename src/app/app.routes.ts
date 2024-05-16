@@ -1,6 +1,6 @@
 import {Route, Routes} from '@angular/router';
-import {Page1Component} from "./components/routes/page1/page1.component";
-import {Page2Component} from "./components/routes/page2/page2.component";
+import {Page2Component} from "./routes/page2/page2.component";
+import {ReasonComponent} from "./routes/reason/reason.component";
 
 export declare type NavRoutes = NavRoute[];
 export interface NavRoute extends Route {
@@ -9,27 +9,27 @@ export interface NavRoute extends Route {
 
 export const routes: NavRoutes = [
   {
-    path: 'page1',
-    title: 'Page1',
-    component: Page1Component,
+    path: 'reasons',
+    title: 'Reasons',
+    component: ReasonComponent,
     visible: true
   },
   {
-    path: 'page2',
-    title: 'Page2',
+    path: 'table',
+    title: 'Table',
     component: Page2Component,
     visible: true
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'page1',
+    redirectTo: 'reasons',
     visible: false
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'page1',
+    redirectTo: 'reasons',
     visible: false
   }
 ];

@@ -1,0 +1,22 @@
+$item-margin: 5px;
+$flex-basis: calc(50% - ($item-margin * 4));
+
+:host {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 10px;
+
+  .reason {
+    margin: $item-margin;
+    flex-basis: max($flex-basis, 400px);
+    border-radius: 20px;
+    flex-grow: 1;
+
+
+    text-align: center;
+
+    // center titles
+    display: flex;
+    align-items: center;
+  }
+}

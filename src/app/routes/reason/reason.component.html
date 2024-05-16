@@ -1,0 +1,9 @@
+<mat-card class="reason" *ngFor="let reason of reasonService.reasons">
+  <mat-card-header>
+    <h1>{{reason.title}}</h1>
+  </mat-card-header>
+
+  <mat-card-content>
+    <span>{{reason.description}}</span>
+  </mat-card-content>
+</mat-card>
