@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {AccountService} from "../../services/account.service";
 import {NgIf} from "@angular/common";
@@ -13,9 +13,7 @@ import {
   MatHeaderRowDef, MatRow, MatRowDef,
   MatTable, MatTableDataSource
 } from "@angular/material/table";
-import {CdkTableDataSourceInput} from "@angular/cdk/table";
 import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
-import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {AccountTableComponent} from "../../components/account-table/account-table.component";
 
 @Component({
@@ -42,7 +40,7 @@ import {AccountTableComponent} from "../../components/account-table/account-tabl
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   protected loading: boolean = false;
   protected dataSource: MatTableDataSource<Account> | undefined;
 
@@ -50,13 +48,19 @@ export class TableComponent {
     private accountService: AccountService,
   ) {}
 
+  public async ngOnInit(): Promise<void> {
+    if (this.accountService.isLoaded()) {
+      this.dataSource = new MatTableDataSource(await this.accountService.getAccounts());
+    }
+  }
+
   public async loadAccounts(): Promise<void> {
     this.loading = true;
 
     if (this.isLoaded()) {
       await this.accountService.reloadAccounts();
     }
-    
+
     this.dataSource = new MatTableDataSource(await this.accountService.getAccounts());
     this.loading = false;
   }

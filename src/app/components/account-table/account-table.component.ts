@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {AccountService} from "../../services/account.service";
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@angular/material/table";
 import {Account} from "../../services/account";
 import {NgIf} from "@angular/common";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-account-table',
@@ -29,7 +29,8 @@ import {NgIf} from "@angular/common";
     MatSortHeader,
     MatTable,
     NgIf,
-    MatHeaderCellDef
+    MatHeaderCellDef,
+    MatPaginator
   ],
   templateUrl: './account-table.component.html',
   styleUrl: './account-table.component.scss'
@@ -43,9 +44,11 @@ export class AccountTableComponent implements AfterViewInit {
   ) {}
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatPaginator) paginator: MatPaginator = MatPaginator.prototype;
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   async announceSort(sort: Sort): Promise<void> {
