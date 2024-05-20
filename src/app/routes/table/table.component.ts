@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {AccountService} from "../../services/account.service";
 import {NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {Account} from "../../services/account";
@@ -13,8 +12,13 @@ import {
   MatHeaderRowDef, MatRow, MatRowDef,
   MatTable, MatTableDataSource
 } from "@angular/material/table";
-import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
+import {MatSort, MatSortHeader} from "@angular/material/sort";
 import {AccountTableComponent} from "../../components/account-table/account-table.component";
+import {Store} from "@ngrx/store";
+import {loadAccounts} from "../../state/account/account.actions";
+import {selectAccounts} from "../../state/account/account.selector";
+import {Subscription} from "rxjs";
+import {AppState} from "../../state/app.state";
 
 @Component({
   selector: 'app-page2',
@@ -40,32 +44,34 @@ import {AccountTableComponent} from "../../components/account-table/account-tabl
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
+  private selectorSubscription?: Subscription;
+  protected dataSource?: MatTableDataSource<Account>;
   protected loading: boolean = false;
-  protected dataSource: MatTableDataSource<Account> | undefined;
 
   constructor(
-    private accountService: AccountService,
+    private store: Store<AppState>
   ) {}
 
-  public async ngOnInit(): Promise<void> {
-    if (this.accountService.isLoaded()) {
-      this.dataSource = new MatTableDataSource(await this.accountService.getAccounts());
+  public ngOnInit(): void {
+    this.selectorSubscription = this.store.select(selectAccounts).subscribe(accounts => {
+      this.dataSource = new MatTableDataSource(accounts);
+      this.loading = false;
+    });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.selectorSubscription != undefined) {
+      this.selectorSubscription.unsubscribe();
     }
   }
 
-  public async loadAccounts(): Promise<void> {
+  public loadAccounts(): void {
     this.loading = true;
-
-    if (this.isLoaded()) {
-      await this.accountService.reloadAccounts();
-    }
-
-    this.dataSource = new MatTableDataSource(await this.accountService.getAccounts());
-    this.loading = false;
+    this.store.dispatch(loadAccounts());
   }
 
   public isLoaded(): boolean {
-    return this.accountService.isLoaded() && this.dataSource != undefined;
+    return this.dataSource != undefined;
   }
 }

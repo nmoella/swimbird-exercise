@@ -46,6 +46,10 @@ export class AccountTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator) paginator: MatPaginator = MatPaginator.prototype;
 
+  ngOnChanges() {
+    console.log(this.dataSource.data)
+  }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
