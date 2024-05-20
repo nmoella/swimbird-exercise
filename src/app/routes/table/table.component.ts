@@ -16,7 +16,7 @@ import {MatSort, MatSortHeader} from "@angular/material/sort";
 import {AccountTableComponent} from "../../components/account-table/account-table.component";
 import {Store} from "@ngrx/store";
 import {loadAccounts} from "../../state/account/account.actions";
-import {selectAccounts} from "../../state/account/account.selector";
+import {selectAccounts} from "../../state/account/account.selectors";
 import {Subscription} from "rxjs";
 import {AppState} from "../../state/app.state";
 
@@ -66,9 +66,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.selectorSubscription != undefined) {
-      this.selectorSubscription.unsubscribe();
-    }
+    this.selectorSubscription?.unsubscribe();
   }
 
   public loadAccounts(): void {

@@ -2,15 +2,15 @@ import {createAction, props} from "@ngrx/store";
 import {Account} from "../../services/account";
 
 export const loadAccounts = createAction(
-  'Load Accounts'
+  '[Account] Load'
 );
 
 export const loadAccountsSuccess= createAction(
-  'Load Accounts Success',
+  '[Account] Load Success',
   props<{accounts: Account[]}>()
 );
 
 export const loadAccountsFail= createAction(
-  'Load Accounts Fail',
+  '[Account] Load Fail',
   props<{error: any}>()
 );

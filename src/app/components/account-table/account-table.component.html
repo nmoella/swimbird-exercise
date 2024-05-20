@@ -1,6 +1,8 @@
 <table
   [dataSource]="dataSource"
   matSort
+  [matSortActive]="sort.active"
+  [matSortDirection]="sort.direction"
   (matSortChange)="announceSort($event)"
   mat-table>
 
