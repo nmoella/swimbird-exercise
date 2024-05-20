@@ -55,7 +55,12 @@ export class TableComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.selectorSubscription = this.store.select(selectAccounts).subscribe(accounts => {
-      this.dataSource = new MatTableDataSource(accounts);
+      if (accounts == undefined) {
+        this.dataSource = undefined;
+      } else {
+        this.dataSource = new MatTableDataSource(accounts);
+      }
+
       this.loading = false;
     });
   }
