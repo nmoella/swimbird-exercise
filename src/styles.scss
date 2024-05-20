@@ -29,7 +29,7 @@ $exercise-theme: mat.define-light-theme((
  global styles
 ----------- */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: $font-family; color: #2d3536 }
 
 // increase height of mat-toolbar
 mat-toolbar {

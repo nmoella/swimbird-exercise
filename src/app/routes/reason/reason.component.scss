@@ -1,29 +1,35 @@
 // width at which the items should acquire a full column
-$switch-width: 400px;
-$item-margin: 5px;
-$flex-basis: calc(50% - ($item-margin * 4));
-$page-padding: 10px;
+$switch-width: 700px;
+$item-gap: 100px;
+$flex-basis: calc(50% - $item-gap);
+$page-padding: 35px;
 
 // takes into account the margins and paddings to precisely match the switch width
-$calc-switch-width: $switch-width - 4 * $item-margin - 2 * $page-padding;
+$calc-switch-width: $switch-width - $item-gap - 2 * $page-padding;
 
 :host {
   display: flex;
   flex-flow: row wrap;
+  gap: $item-gap;
   padding: $page-padding;
 
-  @media screen and (max-width: calc($calc-switch-width + 4 * $item-margin + 2 * $page-padding)) {
+  @media screen and (max-width: calc($calc-switch-width + $item-gap + 2 * $page-padding)) {
     flex-direction: column-reverse;
   }
 
   .reason {
-    margin: $item-margin;
     flex-basis: max($flex-basis, $calc-switch-width / 2);
-    border-radius: 20px;
     flex-grow: 1;
 
-    // center titles
-    display: flex;
-    align-items: center;
+    h1 {
+      margin: 0 0 10px 0;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 16px;
+    }
   }
 }

@@ -7,18 +7,16 @@ import {Reason} from "./reason";
 export class ReasonService {
   public reasons: Reason[] = [
     {
-      title: 'Reason 1',
-      description: 'Description 1'
+      title: 'Banks & asset managers',
+      description: 'We seamlessly integrate and aggregate transaction data from multiple sources with flexibility and fast development.'
     },
     {
-      title: 'Reason 2',
-      description: 'Description 2'
+      title: 'Family offices & investment companies',
+      description: 'Get access to our modern and user-friendly user interface to manage your total portfolio including listed and unlisted investments.'
     },
     {
-      title: 'Reason 3',
-      description: 'Description 3'
-    }
+      title: 'Private equity & venture capital firms',
+      description: 'Get transparency and insights in your multi asset portfolio with details and analytics relevant to both GPs and LPs.'
+    },
   ]
-
-  constructor() { }
 }
