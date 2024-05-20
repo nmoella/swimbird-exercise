@@ -1,0 +1,24 @@
+<button
+  *ngIf="!loading; else loadingButton"
+  (click)="loadAccounts()"
+  mat-raised-button
+  color="primary">{{isLoaded() ? 'Reload data' : 'Load data'}}
+</button>
+
+<ng-template #loadingButton>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="true">
+    <mat-spinner diameter="25"></mat-spinner>
+  </button>
+</ng-template>
+
+<app-account-table
+  *ngIf="isLoaded(); else notLoaded"
+  [dataSource]="dataSource!">
+</app-account-table>
+
+<ng-template #notLoaded>
+  <p>Data is not loaded</p>
+</ng-template>

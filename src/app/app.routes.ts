@@ -1,6 +1,6 @@
-import {Route, Routes} from '@angular/router';
-import {Page2Component} from "./routes/page2/page2.component";
+import {Route} from '@angular/router';
 import {ReasonComponent} from "./routes/reason/reason.component";
+import {TableComponent} from "./routes/table/table.component";
 
 export declare type NavRoutes = NavRoute[];
 export interface NavRoute extends Route {
@@ -17,7 +17,7 @@ export const routes: NavRoutes = [
   {
     path: 'table',
     title: 'Table',
-    component: Page2Component,
+    component: TableComponent,
     visible: true
   },
   {

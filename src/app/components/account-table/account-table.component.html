@@ -1,0 +1,61 @@
+<table
+  [dataSource]="dataSource"
+  matSort
+  [matSortActive]="sort.active"
+  [matSortDirection]="sort.direction"
+  (matSortChange)="announceSort($event)"
+  mat-table>
+
+  <ng-container matColumnDef="id">
+    <th
+      mat-header-cell
+      mat-sort-header
+      sortActionDescription="Sort by ID"
+      *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{element.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="accountId">
+    <th
+      mat-header-cell
+      mat-sort-header
+      sortActionDescription="Sort by account ID"
+      *matHeaderCellDef>Account ID</th>
+    <td mat-cell *matCellDef="let element">{{element.accountId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="bank">
+    <th
+      mat-header-cell
+      mat-sort-header
+      sortActionDescription="Sort by bank"
+      *matHeaderCellDef>Bank</th>
+    <td mat-cell *matCellDef="let element">{{element.bank}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="balance">
+    <th
+      mat-header-cell
+      mat-sort-header
+      sortActionDescription="Sort by balance"
+      *matHeaderCellDef>Balance</th>
+    <td mat-cell *matCellDef="let element">{{element.balance}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="currency">
+    <th
+      mat-header-cell
+      mat-sort-header
+      sortActionDescription="Sort by currency"
+      *matHeaderCellDef>Currency</th>
+    <td mat-cell *matCellDef="let element">{{element.currency}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>
