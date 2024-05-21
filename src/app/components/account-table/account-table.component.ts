@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  Input,
+  Input, NgZone,
   OnDestroy,
   OnInit,
   ViewChild
@@ -24,6 +24,7 @@ import {Store} from "@ngrx/store";
 import {Subscription} from "rxjs";
 import {selectSort} from "../../state/account-sort/account-sort.selectors";
 import {setSort} from "../../state/account-sort/account-sort.actions";
+import {BreakpointObserver, MediaMatcher} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-account-table',
@@ -51,13 +52,16 @@ export class AccountTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private selectorSubscription?: Subscription;
 
   protected sort: Sort = {direction: '', active: ''};
-  protected displayedColumns: string[] = ['id', 'accountId', 'bank', 'balance', 'currency'];
+  protected desktopColumns: string[] = ['id', 'accountId', 'bank', 'balance', 'currency'];
+  protected mobileColumns: string[] = ['accountId', 'bank', 'balance_currency'];
+  protected displayedColumns: string[] = this.desktopColumns;
 
   @Input({required: true}) dataSource!: MatTableDataSource<Account>;
 
   constructor(
     private liveAnnouncer: LiveAnnouncer,
     private store: Store<AppState>,
+    private breakpointObserver: BreakpointObserver,
   ) {}
 
   @ViewChild(MatSort) matSort: MatSort = new MatSort();
@@ -70,6 +74,14 @@ export class AccountTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sort.direction = sort.direction;
       }
     });
+
+    this.breakpointObserver.observe(['(min-width: 500px)']).subscribe(result => {
+      if (result.matches) {
+        this.displayedColumns = this.desktopColumns;
+      } else {
+        this.displayedColumns = this.mobileColumns;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -77,6 +89,18 @@ export class AccountTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'id': return item.id;
+        case 'accountId': return item.accountId;
+        case 'bank': return item.bank;
+        case 'balance': return item.balance;
+        case 'currency': return item.currency;
+        case 'balance_currency': return item.balance;
+        default: throw new Error('Unknown property: ' + property);
+      }
+    };
+
     this.dataSource.sort = this.matSort;
     this.dataSource.paginator = this.paginator;
 
